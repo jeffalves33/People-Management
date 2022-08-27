@@ -54,11 +54,8 @@ vários outros aspectos.
 
 Caso queira ter um clone desse repositório para praticar, desenvolver ou até ajudar a melhorar, pode iniciar seu projeto da seguinte forma em sua máquina:
 
-- Clone o repositório: `git clone https://github.com/jeffalves33/Desafio---TutorMundi.git`
-- Instale as dependências: `npm i` ou `npm install`
-- Inicie a aplicação: `npm run dev`
-- Abra a porta no navegador: [localhost:3000](https://localhost:3000)
-- divirta-se!
+- Clone o repositório: `git clone https://github.com/jeffalves33/People-Management`
+
 
 
 ## What the repository offers
