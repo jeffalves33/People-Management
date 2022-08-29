@@ -52,9 +52,23 @@ vários outros aspectos.
 
 ## Quick Start
 
-Caso queira ter um clone desse repositório para praticar, desenvolver ou até ajudar a melhorar, pode iniciar seu projeto da seguinte forma em sua máquina:
+obs.: Esse projeto (em 28/08/2022) ainda não possui Docker. Porquanto, iremos usar uma configuração mais detalhada.
 
 - Clone o repositório: `git clone https://github.com/jeffalves33/People-Management`
+
+De antemão, baixe as dependências que o projeto precisará em seu .json.
+
+É necessário a pré cofiguração do Xampp e do AMysql (https://blog.templatetoaster.com/xampp-mysql/).
+
+- Inicialize seu projeto com o comando para acompanhar sua aplicação:
+
+    `symfony server:start`
+
+Inicialize o Xampp e pode acompanhar as mudanças tanto pelo phpMyAmin como pelo próprio MySQL.
+
+... atualizar parte de criação no banco
+
+
 
 
 
