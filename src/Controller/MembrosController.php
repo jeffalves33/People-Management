@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Membros;
 use App\Form\MembrosType;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\IgrejasRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -44,10 +45,23 @@ class MembrosController extends AbstractController{
     /**
      * @Route("/membros/adicionar", name="membros_adicionar")
      */
-    public function adicionar() : Response{
-        $form  = $this->createForm(MembrosType::class);
+    public function adicionar(Request $request, EntityManagerInterface $em) : Response{
+        $mensagem = '';
+        $membro = new Membros();
+        $form  = $this->createForm(MembrosType::class, $membro);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            //salvar a nova igreja no banco de dados
+            $em->persist($membro); //salvar na memória
+            $em->flush();
+            $mensagem = "membro adicionado";
+        }
+
         $data['titulo'] = "adicionar novo membro";
         $data['form'] = $form;
+        $data['mensagem'] = $mensagem;
+    
         return $this->renderForm('membros/form.html.twig', $data);
     }
 

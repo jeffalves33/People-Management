@@ -13,7 +13,7 @@ class Membros
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $nome = null;
 
     #[ORM\Column(length: 11)]

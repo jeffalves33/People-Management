@@ -15,13 +15,14 @@ class MembrosType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("nomeMembro", TextType::class, ['label' => 'Nome Membro'])
-            ->add("datanascimentoMembro", TextType::class, ['label' => 'Data Nascimento Membro'])
-            ->add("emailMembro", TextType::class, ['label' => 'Email Membro'])
-            ->add("telefoneMembro", TextType::class, ['label' => 'Telefone Membro'])
-            ->add("logradouroMembro", TextType::class, ['label' => 'Logradouro Membro'])
-            ->add("cidadeMembro", TextType::class, ['label' => 'Cidade Membro'])
-            ->add("estadoMembro", TextType::class, ['label' => 'Estado Membro'])
+            ->add("nome", TextType::class, ['label' => 'Nome Membro'])
+            ->add("cpf", TextType::class, ['label' => "CPF Membro"])
+            ->add("data_nascimento", TextType::class, ['label' => 'Data Nascimento Membro'])
+            ->add("email", TextType::class, ['label' => 'Email Membro'])
+            ->add("telefone", TextType::class, ['label' => 'Telefone Membro'])
+            ->add("logradouro", TextType::class, ['label' => 'Logradouro Membro'])
+            ->add("cidade", TextType::class, ['label' => 'Cidade Membro'])
+            ->add("estado", TextType::class, ['label' => 'Estado Membro'])
             ->add("igreja", EntityType::class, [
                                                 'class' => Igrejas::class,
                                                 'choice_label' => 'nome',

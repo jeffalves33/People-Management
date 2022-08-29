@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Igrejas;
 use App\Form\IgrejasType;
-
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,10 +38,22 @@ class IgrejasController extends AbstractController{
     /**
      * @Route("/igrejas/adicionar", name="igrejas_adicionar")
      */
-    public function adicionar() : Response{
-        $form  = $this->createForm(IgrejasType::class);
+    public function adicionar(Request $request, EntityManagerInterface $em) : Response{
+        $mensagem = '';
+        $igreja = new Igrejas();
+        $form  = $this->createForm(IgrejasType::class, $igreja);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            //salvar a nova igreja no banco de dados
+            $em->persist($igreja); //salvar na memória
+            $em->flush();
+            $mensagem = 'Igreja adicionada com sucesso';
+        }
+
         $data['titulo'] = "adicionar nova igreja";
         $data['form'] = $form;
+        $data['mensagem'] = $mensagem;
         return $this->renderForm('igrejas/form.html.twig', $data);
     }
 }

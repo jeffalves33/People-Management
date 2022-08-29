@@ -13,10 +13,10 @@ class IgrejasType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("nomeIgreja", TextType::class, ['label' => 'Nome Igreja'])
-            ->add("enderecoIgreja", TextType::class, ['label' => 'Endereco Igreja'])
-            ->add("websiteIgreja", TextType::class, ['label' => 'WebSite Igreja'])
-            ->add("fotoIgreja", TextType::class, ['label' => 'Foto Igreja'])
+            ->add("nome", TextType::class, ['label' => 'Nome Igreja'])
+            ->add("endereco", TextType::class, ['label' => 'Endereco Igreja'])
+            ->add("website", TextType::class, ['label' => 'WebSite Igreja'])
+            ->add("foto_igreja", TextType::class, ['label' => 'Foto Igreja'])
             ->add("Salvar", SubmitType::class);
     }
 }
