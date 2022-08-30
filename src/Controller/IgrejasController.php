@@ -45,4 +45,24 @@ class IgrejasController extends AbstractController{
         $data['mensagem'] = $mensagem;
         return $this->renderForm('igrejas/form.html.twig', $data);
     }
+
+    /**
+     * @Route("/igrejas/editar{id}", name="igrejas_editar")
+     */
+    public function editar($id, Request $request, EntityManagerInterface $em, IgrejasRepository $igrejasRepository, ) : Response {
+        $mensagem = '';
+        $igreja = $igrejasRepository->find($id); //return igreja pelo id
+        $form = $this->createForm(IgrejasType::class, $igreja);
+        $form->handleRequest($request); 
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+            $mensagem = "Igreja atualizada com sucesso!";
+        }
+
+        $data['titulo'] = "editar igreja";
+        $data['form'] = $form;
+        $data['mensagem'] = $mensagem;
+        return $this->renderForm('igrejas/form.html.twig', $data);
+    }
 }

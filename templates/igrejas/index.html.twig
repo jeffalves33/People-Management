@@ -18,7 +18,7 @@
                 <td>{{ igreja.id }}</td>
                 <td>{{ igreja.nome }}</td>
                 <td>
-                    <a href="#" class="btn btn-primary">Editar</a>
+                    <a href="{{ path('igrejas_editar', {id: igreja.id}) }}" class="btn btn-primary">Editar</a>
                     <a href="#" class="btn btn-primary">Excluir</a>
                 </td>
             </tr>
