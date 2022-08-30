@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ titulo }} {% endblock %}
+
+{% block body %}
+<h1> {{titulo}} </h1>
+<a href="{{ path('igrejas_adicionar') }}" class="btn btn-primary">+ Adicionar</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Descrição</td>
+            <td>Ações</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for igreja in igrejas %}
+            <tr>
+                <td>{{ igreja.id }}</td>
+                <td>{{ igreja.nome }}</td>
+                <td>
+                    <a href="#" class="btn btn-primary">Editar</a>
+                    <a href="#" class="btn btn-primary">Excluir</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

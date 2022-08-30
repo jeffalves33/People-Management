@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Igrejas;
 use App\Form\IgrejasType;
+use App\Repository\IgrejasRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -15,24 +16,12 @@ class IgrejasController extends AbstractController{
     /**
      * @Route("/igrejas", name="igrejas")
      */
-    public function index(EntityManagerInterface $em) : Response {
-        //$em é um obj que vai auxiliar a execução no banco de dados
-        $igreja = new Igrejas();
-        $igreja->setNome("Assembléia");
-        $igreja->setEndereco("Rua do Biel");
-        $igreja->setWebsite("www.Reconciliação.br");
-        $igreja->setFotoIgreja("sem foto");
+    public function index(IgrejasRepository $igrejasRepository) : Response {
+        //buscar no bd todas as igrejas
+        $data['igrejas'] = $igrejasRepository->findAll();
+        $data['titulo'] = 'Gerenciar Igrejas';
 
-        try{
-            $em->persist($igreja); //salva em nível de memória
-            $em->flush(); //salva no banco de dados
-            $msg = "Igreja cadastrada com sucesso";
-        }
-        catch(Exception $e){
-            $msg = "Erro ao cadastrar Igreja";
-        }
-
-        return new Response("<h1" . $msg . "</h1>");
+        return $this->render('igrejas/index.html.twig', $data);
     }
 
     /**
