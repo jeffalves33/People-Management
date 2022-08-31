@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ titulo }} {% endblock %}
+
+{% block body %}
+<h1> {{titulo}} </h1>
+<a href="{{ path('membros_adicionar') }}" class="btn btn-primary">+ Adicionar</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Nome</td>
+            <td>CPF</td>
+            <td>Telefone</td>
+            <td>Igreja</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for membro in membros %}
+            <tr>
+                <td>{{ membro.id }}</td>
+                <td>{{ membro.nome }}</td>
+                <td>{{ membro.cpf }}</td>
+                <td>{{ membro.telefone }}</td>
+                <td>{{membro.Igreja.nome}}</td>
+                <td>
+                    <a href="{{ path('membros_editar', {id: membro.id}) }}" class="btn btn-primary">Editar</a>
+                    <a href="{{ path('membros_excluir', {id: membro.id}) }}" class="btn btn-primary">Excluir</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

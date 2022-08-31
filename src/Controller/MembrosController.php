@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Membros;
 use App\Form\MembrosType;
 use Symfony\Component\HttpFoundation\Request;
-use App\Repository\IgrejasRepository;
+use App\Repository\MembrosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,33 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MembrosController extends AbstractController{
+
     /**
      * @Route("/membros", name="membros")
      */
-    public function index(EntityManagerInterface $em, IgrejasRepository $igrejasRepository) : Response {
-        //$em é um obj que vai auxiliar a execução no banco de dados
-        $igreja = $igrejasRepository->find(1);
-        $membro = new Membros();
-        $membro->setNome("jocimar correa");
-        $membro->setCpf("12345678912");
-        $membro->setDataNascimento("20/20/20");
-        $membro->setEmail("joci_mar@gmail.com");
-        $membro->setTelefone("27998655235");
-        $membro->setLogradouro("casa");
-        $membro->setCidade("serra");
-        $membro->setEstado("ES");
-        $membro->setIgreja($igreja);
-        
-        try{
-            $em->persist($membro); //salva em nível de memória
-            $em->flush(); //salva no banco de dados
-            $msg = "Produto cadastrada com sucesso";
-        }
-        catch(Exception $e){
-            $msg = "Erro ao cadastrar Produto";
-        }
+    public function index(MembrosRepository $membrosRepository) : Response {
+        //buscar no bd todas os membros
+        $data['membros'] = $membrosRepository->findAll();
+        $data['titulo'] = 'Gerenciar Membros';
 
-        return new Response("<h1" . $msg . "</h1>");
+        return $this->render('membros/index.html.twig', $data);
     }
 
     /**
@@ -52,17 +35,48 @@ class MembrosController extends AbstractController{
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            //salvar a nova igreja no banco de dados
+            //salvar um novo membro no banco de dados
             $em->persist($membro); //salvar na memória
             $em->flush();
-            $mensagem = "membro adicionado";
+            $mensagem = 'Membro adicionado com sucesso';
         }
 
         $data['titulo'] = "adicionar novo membro";
         $data['form'] = $form;
         $data['mensagem'] = $mensagem;
-    
         return $this->renderForm('membros/form.html.twig', $data);
+    }
+
+    /**
+     * @Route("/membros/editar{id}", name="membros_editar")
+     */
+    public function editar($id, Request $request, EntityManagerInterface $em, MembrosRepository $membrosRepository ) : Response {
+        $mensagem = '';
+        $membro = $membrosRepository->find($id); //return membro pelo id
+        $form = $this->createForm(MembrosType::class, $membro);
+        $form->handleRequest($request); 
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+            $mensagem = "Membro atualizada com sucesso!";
+        }
+
+        $data['titulo'] = "editar membro";
+        $data['form'] = $form;
+        $data['mensagem'] = $mensagem;
+        return $this->renderForm('membros/form.html.twig', $data);
+    }
+
+    /**
+     * @Route("/membros/excluir{id}", name="membros_excluir")
+     */
+    public function excluir($id, EntityManagerInterface $em, MembrosRepository $membrosRepository) : Response {
+        $membro = $membrosRepository->find($id);
+
+        $em->remove($membro); //exclui a nivel de memória
+        $em->flush(); //excluir a nível de banco de dados
+
+        return $this->redirectToRoute('membros');
     }
 
 }

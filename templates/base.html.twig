@@ -15,6 +15,14 @@
         {% endblock %}#}
     </head>
     <body>
+        <div class="container">
+            <header class="d-flex justify-content-center py-3">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="{{ path('igrejas') }}" class="nav-link " aria-current="page">Igrejas</a></li>
+                    <li class="nav-item"><a href="{{ path('membros') }}" class="nav-link " aria-current="page">Membros</a></li>
+                </ul>
+            </header>
+        </div>
         {% block body %}{% endblock %}
     </body>
 </html>
